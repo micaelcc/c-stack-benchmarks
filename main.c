@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <glib.h>
-
+#define INPUT_SIZE 100000000
 typedef struct No
 {
     int dado;
@@ -72,29 +72,28 @@ static inline int popArr(PilhaArr *restrict p)
     return p->dados[p->topo--];
 }
 
-const int size = 100000000;
 
 __attribute__((hot)) void testEnc(PilhaEnc *restrict p)
 {
-    for (int i = 0; i < size; i++)
+    for (int i = 0; i < INPUT_SIZE; i++)
         pushEnc(p, i);
-    for (int i = 0; i < size; i++)
+    for (int i = 0; i < INPUT_SIZE; i++)
         popEnc(p);
 }
 
 __attribute__((hot)) void testArr(PilhaArr *restrict p)
 {
-    for (int i = 0; i < size; i++)
+    for (int i = 0; i < INPUT_SIZE; i++)
         pushArr(p, i);
-    for (int i = 0; i < size; i++)
+    for (int i = 0; i < INPUT_SIZE; i++)
         popArr(p);
 }
 
 __attribute__((hot)) void testGlib(GQueue *restrict g)
 {
-    for (int i = 0; i < size; i++)
+    for (int i = 0; i < INPUT_SIZE; i++)
         g_queue_push_head(g, GINT_TO_POINTER(i));
-    for (int i = 0; i < size; i++)
+    for (int i = 0; i < INPUT_SIZE; i++)
         g_queue_pop_head(g);
 }
 
@@ -117,7 +116,7 @@ void main()
     testGlib(g);
     t6 = clock();
 
-    printf("Items pushed: 100 million\nItems popped: 100 million\n", size);
+    printf("Items pushed: 100 million\nItems popped: 100 million\n");
     printf("linked list: %.3f s\n", (double)(t2 - t1) / CLOCKS_PER_SEC);
     printf("      array: %.3f s\n", (double)(t4 - t3) / CLOCKS_PER_SEC);
     printf("      glib:  %.3f s\n", (double)(t6 - t5) / CLOCKS_PER_SEC);
