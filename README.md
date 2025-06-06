@@ -1,7 +1,7 @@
 # c-stack-benchmarks
 Realizando uma pequena comparacao entre estruturas de pilhas em C, utilizando (1) lista encadeada, (2) array e (3) g_queue da biblioteca GLib
 
-## Instalando dependencias (GNU/Linux)
+## Instalando dependencias (Debian based)
 ```bash
   sudo apt install build-essential libglib2.0-dev -y
 ```
